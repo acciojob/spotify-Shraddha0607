@@ -40,12 +40,14 @@ public class SpotifyRepository {
     public User createUser(String name, String mobile) {
         User user = new User(name,mobile);
         users.add(user);
+        userPlaylistMap.put(user,new ArrayList<>());
         return user;
     }
 
     public Artist createArtist(String name) {
         Artist artist =  new Artist(name);
         artists.add(artist);
+        artistAlbumMap.put(artist,new ArrayList<>());
         return artist;
     }
 
@@ -54,7 +56,7 @@ public class SpotifyRepository {
         // first check in aritsts list, artist Name is present if not then create artist first
         boolean isArtistNamePresent = false;
         for(Artist artist : artists){
-            if(artist.getName() == artistName){
+            if(artist.getName().equals(artistName)){
                 isArtistNamePresent = true;
                 break;
             }
@@ -69,8 +71,9 @@ public class SpotifyRepository {
         albums.add(album);
 
         for(Artist artist : artists){
-            if(artist.getName() == artistName){
+            if(artist.getName().equals(artistName)){
                 artistAlbumMap.put(artist, albums);       // since in this format needed to add
+                albumSongMap.put(album,new ArrayList<>());
             }
         }
 
@@ -79,25 +82,50 @@ public class SpotifyRepository {
 
     public Song createSong(String title, String albumName, int length) throws Exception{
 
-        Album foundAlbum = null;
-        // first check in album list, album Name is present if not then exception
-        for(Album album : albums){
-            if(album.getTitle().equals(albumName) ){
-                foundAlbum = album;
+//        Album foundAlbum = null;
+//        // first check in album list, album Name is present if not then exception
+//        for(Album album : albums){
+//            if(album.getTitle().equals(albumName) ){
+//                foundAlbum = album;
+//                break;
+//            }
+//        }
+//
+//        if(foundAlbum == null){
+//            // If the albumName is not found, throw an exception
+//            throw new Exception("Album with name '" + albumName + "' not found");
+//        }
+//
+//        // as we find the albumName, so add new song in songs list and add that list with hashmap albumSongMap
+//        Song song = new Song(title, length);
+//        song.setLikes(0);
+//        songs.add(song);
+//        albumSongMap.get(foundAlbum).add(song);
+//        songLikeMap.put(song,new ArrayList<>());
+//        return song;
+
+
+
+        Album album=null;
+        for(Album album1:albums){
+            if(album1.getTitle().equals(albumName)){
+                album=album1;
                 break;
             }
         }
+        if(album == null){
+            throw new Exception("Album does not exist");
+        }
+        Song song=new Song(title,length);
+        song.setLikes(0);
+        songs.add(song);
 
-        if(foundAlbum != null){
-            // as we find the albumName, so add new song in songs list and add that list with hashmap albumSongMap
-            Song song = new Song(title, length);
-            albumSongMap.get(foundAlbum).add(song);
-            return song;
-        }
-        else{
-            // If the albumName is not found, throw an exception
-            throw new Exception("Album with name '" + albumName + "' not found");
-        }
+        albumSongMap.get(album).add(song);
+
+        songLikeMap.put(song,new ArrayList<>());
+
+        return song;
+
 
     }
 

@@ -37,36 +37,26 @@ public class SpotifyService {
     }
 
     public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
-
-        Playlist playlist = new Playlist();
-        return playlist;
+        return spotifyRepository.createPlaylistOnLength(mobile, title, length);
     }
 
     public Playlist createPlaylistOnName(String mobile, String title, List<String> songTitles) throws Exception {
-
-        Playlist playlist = new Playlist();
-        return playlist;
+        return spotifyRepository.createPlaylistOnName(mobile, title, songTitles);
     }
 
     public Playlist findPlaylist(String mobile, String playlistTitle) throws Exception {
-
-        Playlist playlist = new Playlist();
-        return playlist;
+        return spotifyRepository.findPlaylist(mobile, playlistTitle);
     }
 
     public Song likeSong(String mobile, String songTitle) throws Exception {
-
-        Song song = new Song();
-        return song;
+        return spotifyRepository.likeSong(mobile, songTitle);
     }
 
     public String mostPopularArtist() {
-
-        return "Success";
+        return spotifyRepository.mostPopularArtist();
     }
 
     public String mostPopularSong() {
-
-        return "Success";
+        return spotifyRepository.mostPopularSong();
     }
 }

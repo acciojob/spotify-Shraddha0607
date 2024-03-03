@@ -14,13 +14,17 @@ public class SpotifyController {
     @PostMapping("/add-user")
     public String createUser(@RequestParam(name = "name") String name, String mobile){
         //create the user with given name and number
+        User user = spotifyService.createUser(name, mobile);
+//        System.out.println(user.getName() + " " + user.getMobile() );
+//
         return "Success";
     }
 
     @PostMapping("/add-artist")
     public String createArtist(@RequestParam(name = "name") String name){
         //create the artist with given name
-
+        Artist artist = spotifyService.createArtist(name);
+//        System.out.println(artist.getName() + " " + artist.getLikes() );
         return "Success";
     }
 
@@ -28,6 +32,8 @@ public class SpotifyController {
     public String createAlbum(@RequestParam(name = "title") String title, String artistName){
         //If the artist does not exist, first create an artist with given name
         //Create an album with given title and artist
+        Album album = spotifyService.createAlbum(title, artistName);
+//        System.out.println(album.getTitle()  );
 
         return "Success";
     }
@@ -85,11 +91,14 @@ public class SpotifyController {
     public String mostPopularArtist(){
         //Return the artist name with maximum likes
 
+        return "Success";
     }
 
     @GetMapping("/popular-song")
     public String mostPopularSong(){
         //return the song title with maximum likes
+
+        return "Success";
 
     }
 }

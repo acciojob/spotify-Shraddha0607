@@ -78,8 +78,27 @@ public class SpotifyRepository {
     }
 
     public Song createSong(String title, String albumName, int length) throws Exception{
-        Song song  = new Song();
-        return song;
+
+        Album foundAlbum = null;
+        // first check in album list, album Name is present if not then exception
+        for(Album album : albums){
+            if(album.getTitle().equals(albumName) ){
+                foundAlbum = album;
+                break;
+            }
+        }
+
+        if(foundAlbum != null){
+            // as we find the albumName, so add new song in songs list and add that list with hashmap albumSongMap
+            Song song = new Song(title, length);
+            albumSongMap.get(foundAlbum).add(song);
+            return song;
+        }
+        else{
+            // If the albumName is not found, throw an exception
+            throw new Exception("Album with name '" + albumName + "' not found");
+        }
+
     }
 
     public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {

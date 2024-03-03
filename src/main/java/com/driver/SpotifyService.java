@@ -31,8 +31,19 @@ public class SpotifyService {
 
     public Song createSong(String title, String albumName, int length) throws Exception {
 
-        Song song = new Song();
-        return song;
+
+        try {
+            Song song = spotifyRepository.createSong(title, albumName,length);
+
+            return song;
+            // Handle the case where the song is successfully created
+        } catch (Exception e) {
+            // Handle the case where an exception occurred, e.g., album not found
+            System.out.println("Error: " + e.getMessage());
+//            return "Error: " + e.getMessage();
+            throw new Exception("Album with name '" + albumName + "' not found");
+
+        }
     }
 
     public Playlist createPlaylistOnLength(String mobile, String title, int length) throws Exception {
